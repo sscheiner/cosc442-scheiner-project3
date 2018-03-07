@@ -100,6 +100,48 @@ public class VendingMachineTest {
 		
 	}
 
+	/**
+	 * test removing a null item
+	 */
+	@Test
+	public void testRemoveNullItem(){
+		
+		try {
+			vend2.addItem(item3, "B");
+			vend2.removeItem("B");
+			//should trigger error
+			vend2.removeItem("B");
+			fail("exception not thrown");
+		} catch (VendingMachineException e) {
+			// successful test
+		}
+		
+	}
+	
+	/**
+	 * test purchasing a null item
+	 */
+	@Test
+	public void testMakeNullPurchase(){
+			vend2.addItem(item3, "B");
+			vend2.removeItem("B");
+			//should trigger error
+			assertFalse(vend2.makePurchase("B"));
+			
+	}
+	
+	/**
+	 * test balance retrieval
+	 */
+	@Test
+	public void testReturnChange(){
+			// initial removal should set to 0
+			vend2.insertMoney(100);
+			double test = vend2.returnChange();
+			assertEquals(vend2.getBalance(), 0.0, 0.00005);
+				
+	}
+
 
 	
 	/**
