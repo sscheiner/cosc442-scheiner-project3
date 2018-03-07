@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>VendingMachineItemTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Mar 7, 2018 3:10:25 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc442.project3.vendingmachine</a> &gt; <span class="el_source">VendingMachineItemTest.java</span></div><h1>VendingMachineItemTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc442.project3.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+
+<span class="fc" id="L10">public class VendingMachineItemTest {</span>
+	
+	/**necessary objects for setup**/
+	VendingMachineItem item1, item2;
+	
+	/**
+	 * sets up the test by instantiating vending machine item objects, tests 
+	 * @throws VendingMachineException
+	 */
+	@Before
+	public void setUp() throws VendingMachineException {
+<span class="fc" id="L21">		item1 = new VendingMachineItem(&quot;marley&quot;, 420);</span>
+<span class="fc" id="L22">		item2 = new VendingMachineItem(&quot;@53n2 h\n24378&quot;, 0);</span>
+		
+		//test exception in instantiation
+		try {
+<span class="nc" id="L26">			VendingMachineItem error = new VendingMachineItem(&quot;dontmatter&quot;, -4);</span>
+<span class="nc" id="L27">		}</span>
+<span class="fc" id="L28">		catch(VendingMachineException e) {</span>
+			//test succeeds
+		}
+<span class="fc" id="L31">	}</span>
+	
+	/**
+	 * tests thatt the item name is properly instantiated and retrieved
+	 */
+	@Test
+	public void testGetName() {
+<span class="fc" id="L38">		assertEquals(&quot;marley&quot;, item1.getName());</span>
+<span class="fc" id="L39">		assertEquals(&quot;@53n2 h\n24378&quot;, item2.getName());</span>
+<span class="fc" id="L40">	}</span>
+	
+	@Test
+	public void testGetPrice() {
+<span class="fc" id="L44">		assertEquals(420, item1.getPrice(), 0.001);</span>
+<span class="fc" id="L45">		assertEquals(0, item2.getPrice(), 0.001);</span>
+		//check to ensure price isn't null
+<span class="fc" id="L47">		assertNotEquals(null, item1.getPrice());</span>
+<span class="fc" id="L48">		assertNotEquals(null, item2.getPrice());</span>
+<span class="fc" id="L49">	}</span>
+	
+	
+	/**
+	 * clean up
+	 */
+	@After
+	public void tearDown(){
+<span class="fc" id="L57">		item1 = null;</span>
+<span class="fc" id="L58">		item2 = null;</span>
+<span class="fc" id="L59">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>AllTests (Mar 7, 2018 3:10:25 PM)</div></body></html>

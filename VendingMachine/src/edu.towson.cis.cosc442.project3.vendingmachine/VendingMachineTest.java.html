@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (Mar 7, 2018 3:10:25 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc442.project3.vendingmachine</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">package edu.towson.cis.cosc442.project3.vendingmachine;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+<span class="fc" id="L9">public class VendingMachineTest {</span>
+
+	private VendingMachine vend1, vend2, vend3;
+	VendingMachineItem item1, item2, item3;
+	
+	@Before
+	public void setUp(){
+<span class="fc" id="L16">		vend1 = new VendingMachine();</span>
+<span class="fc" id="L17">		vend2 = new VendingMachine();</span>
+<span class="fc" id="L18">		vend3 = new VendingMachine();</span>
+<span class="fc" id="L19">		item1 = new VendingMachineItem(&quot;marley&quot;, 420);</span>
+<span class="fc" id="L20">		item2 = new VendingMachineItem(&quot;@53n2 h\n24378&quot;, 0);</span>
+<span class="fc" id="L21">		item3 = new VendingMachineItem(&quot;josh&quot;, 100);</span>
+<span class="fc" id="L22">	}</span>
+
+	/**
+	 * test that item adds are processed and checked correctly
+	 * @throws Exception
+	 */
+	@Test
+	public void testAddItem(){
+<span class="fc" id="L30">		vend1.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L31">		vend1.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L32">		vend1.addItem(item3, &quot;C&quot;);</span>
+<span class="fc" id="L33">		vend1.addItem(item1, &quot;D&quot;);</span>
+		//catch invalid slot
+		try {
+<span class="nc" id="L36">			vend2.addItem(item1, &quot;Z&quot;);</span>
+<span class="nc" id="L37">			fail(&quot;exception not thrown&quot;);</span>
+<span class="nc" id="L38">		}</span>
+<span class="fc" id="L39">		catch(VendingMachineException e) {</span>
+			//test succeeds
+		}
+		
+		//catch adding to occupied slot
+		try {
+<span class="nc" id="L45">			vend1.addItem(item1, &quot;B&quot;);</span>
+<span class="nc" id="L46">			fail(&quot;exception not thrown&quot;);</span>
+<span class="nc" id="L47">		}</span>
+<span class="fc" id="L48">		catch(VendingMachineException e) {</span>
+			//test succeeds
+		}
+
+<span class="fc" id="L52">	}</span>
+	
+	/**
+	 * confirm proper removal of item from vending machine slot
+	 * @throws Exception
+	 */
+	@Test
+	public void testRemoveItem() throws Exception{
+		
+<span class="fc" id="L61">		vend3.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L62">		vend3.removeItem(&quot;A&quot;);</span>
+<span class="fc" id="L63">		assertNull(vend3.getItem(&quot;A&quot;));</span>
+		
+<span class="fc" id="L65">	}</span>
+	
+	
+	/**
+	 * tests money insertion method for checks and proper behavior
+	 * @throws Exception
+	 */
+	@Test
+	public void testInsertMoney(){
+<span class="fc" id="L74">		vend1.insertMoney(99);</span>
+<span class="fc" id="L75">		assertEquals(vend1.getBalance(), 99, 0.000001);</span>
+		//try to insert negative money
+		try {
+<span class="nc" id="L78">			vend1.insertMoney(-46.2);</span>
+<span class="nc" id="L79">			fail(&quot;exception not thrown&quot;);</span>
+<span class="nc" id="L80">		}</span>
+<span class="fc" id="L81">		catch(VendingMachineException e) {</span>
+			//test succeeds
+		}	
+<span class="fc" id="L84">	}</span>
+	
+	@Test
+	public void testGetBalance(){
+		
+<span class="fc" id="L89">	}</span>
+	
+	/**
+	 * test purchasing success and failure based on balance and item cost
+	 */
+	@Test
+	public void testMakePurchase(){
+		
+<span class="fc" id="L97">		vend2.addItem(item3, &quot;A&quot;);</span>
+<span class="fc" id="L98">		vend2.insertMoney(101);</span>
+<span class="fc" id="L99">		assertTrue(vend2.makePurchase(&quot;A&quot;));</span>
+		
+<span class="fc" id="L101">	}</span>
+
+	/**
+	 * test removing a null item
+	 */
+	@Test
+	public void testRemoveNullItem(){
+		
+		try {
+<span class="fc" id="L110">			vend2.addItem(item3, &quot;B&quot;);</span>
+<span class="fc" id="L111">			vend2.removeItem(&quot;B&quot;);</span>
+			//should trigger error
+<span class="nc" id="L113">			vend2.removeItem(&quot;B&quot;);</span>
+<span class="nc" id="L114">			fail(&quot;exception not thrown&quot;);</span>
+<span class="pc" id="L115">		} catch (VendingMachineException e) {</span>
+			// successful test
+		}
+		
+<span class="fc" id="L119">	}</span>
+	
+	/**
+	 * test purchasing a null item
+	 */
+	@Test
+	public void testMakeNullPurchase(){
+<span class="fc" id="L126">			vend2.addItem(item3, &quot;B&quot;);</span>
+<span class="fc" id="L127">			vend2.removeItem(&quot;B&quot;);</span>
+			//should trigger error
+<span class="fc" id="L129">			assertFalse(vend2.makePurchase(&quot;B&quot;));</span>
+			
+<span class="fc" id="L131">	}</span>
+	
+	/**
+	 * test balance retrieval
+	 */
+	@Test
+	public void testReturnChange(){
+			// initial removal should set to 0
+<span class="fc" id="L139">			vend2.insertMoney(100);</span>
+<span class="fc" id="L140">			double test = vend2.returnChange();</span>
+<span class="fc" id="L141">			assertEquals(vend2.getBalance(), 0.0, 0.00005);</span>
+				
+<span class="fc" id="L143">	}</span>
+
+
+	
+	/**
+	 * not strictly necessary
+	 * @throws Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+		
+<span class="fc" id="L154">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span>AllTests (Mar 7, 2018 3:10:25 PM)</div></body></html>
